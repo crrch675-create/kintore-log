@@ -15,3 +15,13 @@ export const EXERCISE_CATALOG: Record<BodyPart, string[]> = {
 export function findBodyPartForExercise(exerciseName: string): BodyPart | undefined {
   return BODY_PARTS.find((part) => EXERCISE_CATALOG[part].includes(exerciseName))
 }
+
+export const BODY_PART_DOT_COLOR: Record<BodyPart, string> = {
+  胸: 'bg-rose-500',
+  背中: 'bg-blue-500',
+  足: 'bg-emerald-500',
+  肩: 'bg-amber-500',
+  二頭筋: 'bg-violet-500',
+  三頭筋: 'bg-pink-500',
+  腹筋: 'bg-teal-500',
+}

@@ -1,7 +1,7 @@
 import { useState } from 'react'
+import { HistoryView } from './components/HistoryView'
 import { ProgressChart } from './components/ProgressChart'
 import { RecordForm } from './components/RecordForm'
-import { WorkoutList } from './components/WorkoutList'
 import { useWorkouts } from './useWorkouts'
 
 type Tab = 'record' | 'history' | 'stats'
@@ -43,7 +43,7 @@ function App() {
 
         {tab === 'record' && <RecordForm onSubmit={addWorkouts} />}
         {tab === 'history' && (
-          <WorkoutList workouts={workouts} onUpdate={updateWorkout} onDelete={deleteWorkout} />
+          <HistoryView workouts={workouts} onUpdate={updateWorkout} onDelete={deleteWorkout} />
         )}
         {tab === 'stats' && <ProgressChart workouts={workouts} exerciseNames={exerciseNames} />}
       </main>
