@@ -9,8 +9,8 @@ export function useWorkouts() {
     saveWorkouts(workouts)
   }, [workouts])
 
-  const addWorkout = (entry: WorkoutEntry) => {
-    setWorkouts((prev) => [entry, ...prev])
+  const addWorkouts = (entries: WorkoutEntry[]) => {
+    setWorkouts((prev) => [...[...entries].reverse(), ...prev])
   }
 
   const updateWorkout = (entry: WorkoutEntry) => {
@@ -26,5 +26,5 @@ export function useWorkouts() {
     return Array.from(names).sort((a, b) => a.localeCompare(b, 'ja'))
   }, [workouts])
 
-  return { workouts, addWorkout, updateWorkout, deleteWorkout, exerciseNames }
+  return { workouts, addWorkouts, updateWorkout, deleteWorkout, exerciseNames }
 }

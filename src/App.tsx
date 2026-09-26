@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ProgressChart } from './components/ProgressChart'
-import { WorkoutForm } from './components/WorkoutForm'
+import { RecordForm } from './components/RecordForm'
 import { WorkoutList } from './components/WorkoutList'
 import { useWorkouts } from './useWorkouts'
 
@@ -13,11 +13,17 @@ const TABS: { id: Tab; label: string }[] = [
 ]
 
 function App() {
-  const { workouts, addWorkout, updateWorkout, deleteWorkout, exerciseNames } = useWorkouts()
+  const { workouts, addWorkouts, updateWorkout, deleteWorkout, exerciseNames } = useWorkouts()
   const [tab, setTab] = useState<Tab>('record')
 
   return (
     <div className="min-h-screen bg-slate-50 pb-16">
+      <datalist id="exercise-names">
+        {exerciseNames.map((name) => (
+          <option key={name} value={name} />
+        ))}
+      </datalist>
+
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-2xl px-4 py-4">
           <h1 className="text-xl font-bold text-slate-800">💪 筋トレ記録</h1>
@@ -41,20 +47,11 @@ function App() {
           ))}
         </nav>
 
-        {tab === 'record' && (
-          <WorkoutForm exerciseNames={exerciseNames} onSubmit={addWorkout} />
-        )}
+        {tab === 'record' && <RecordForm onSubmit={addWorkouts} />}
         {tab === 'history' && (
-          <WorkoutList
-            workouts={workouts}
-            exerciseNames={exerciseNames}
-            onUpdate={updateWorkout}
-            onDelete={deleteWorkout}
-          />
+          <WorkoutList workouts={workouts} onUpdate={updateWorkout} onDelete={deleteWorkout} />
         )}
-        {tab === 'stats' && (
-          <ProgressChart workouts={workouts} exerciseNames={exerciseNames} />
-        )}
+        {tab === 'stats' && <ProgressChart workouts={workouts} exerciseNames={exerciseNames} />}
       </main>
     </div>
   )

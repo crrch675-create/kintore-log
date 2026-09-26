@@ -5,12 +5,11 @@ import { WorkoutForm } from './WorkoutForm'
 
 type Props = {
   workouts: WorkoutEntry[]
-  exerciseNames: string[]
   onUpdate: (entry: WorkoutEntry) => void
   onDelete: (id: string) => void
 }
 
-export function WorkoutList({ workouts, exerciseNames, onUpdate, onDelete }: Props) {
+export function WorkoutList({ workouts, onUpdate, onDelete }: Props) {
   const [editingId, setEditingId] = useState<string | null>(null)
 
   const groups = useMemo(() => {
@@ -41,7 +40,6 @@ export function WorkoutList({ workouts, exerciseNames, onUpdate, onDelete }: Pro
               editingId === entry.id ? (
                 <WorkoutForm
                   key={entry.id}
-                  exerciseNames={exerciseNames}
                   initial={entry}
                   onCancel={() => setEditingId(null)}
                   onSubmit={(updated) => {

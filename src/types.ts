@@ -11,3 +11,10 @@ export type WorkoutEntry = {
   sets: SetEntry[]
   memo?: string
 }
+
+export type ExerciseBlockValue = {
+  id: string
+  exerciseName: string
+  sets: SetEntry[]
+  memo: string
+}
