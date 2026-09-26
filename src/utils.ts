@@ -1,4 +1,5 @@
-import type { WorkoutEntry } from './types'
+import { v4 as uuid } from 'uuid'
+import type { ExerciseBlockValue, SetEntry, WorkoutEntry } from './types'
 
 export function todayString(): string {
   const now = new Date()
@@ -19,4 +20,12 @@ export function totalVolume(entry: WorkoutEntry): number {
 
 export function maxWeight(entry: WorkoutEntry): number {
   return entry.sets.reduce((max, s) => Math.max(max, s.weight), 0)
+}
+
+export function emptySet(): SetEntry {
+  return { id: uuid(), weight: 0, reps: 0 }
+}
+
+export function emptyExerciseBlock(): ExerciseBlockValue {
+  return { id: uuid(), exerciseName: '', sets: [emptySet()], memo: '' }
 }
