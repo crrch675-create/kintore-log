@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import type { BodyPart } from '../exerciseCatalog'
+import { BODY_PARTS, EXERCISE_CATALOG, findBodyPartForExercise } from '../exerciseCatalog'
 import type { ExerciseBlockValue } from '../types'
 import { emptySet } from '../utils'
 
@@ -8,6 +11,16 @@ type Props = {
 }
 
 export function ExerciseFields({ value, onChange, onRemove }: Props) {
+  const [bodyPart, setBodyPart] = useState<BodyPart>(
+    () => findBodyPartForExercise(value.exerciseName) ?? BODY_PARTS[0],
+  )
+
+  const exerciseOptions = EXERCISE_CATALOG[bodyPart].includes(value.exerciseName)
+    ? EXERCISE_CATALOG[bodyPart]
+    : value.exerciseName
+      ? [value.exerciseName, ...EXERCISE_CATALOG[bodyPart]]
+      : EXERCISE_CATALOG[bodyPart]
+
   const updateSet = (id: string, field: 'weight' | 'reps', num: number) => {
     onChange({
       ...value,
@@ -25,17 +38,44 @@ export function ExerciseFields({ value, onChange, onRemove }: Props) {
   return (
     <div className="space-y-4">
       <div className="flex items-start gap-2">
-        <label className="block flex-1">
-          <span className="mb-1 block text-sm font-medium text-slate-600">種目名</span>
-          <input
-            type="text"
-            list="exercise-names"
-            value={value.exerciseName}
-            onChange={(e) => onChange({ ...value, exerciseName: e.target.value })}
-            placeholder="例: ベンチプレス"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-          />
-        </label>
+        <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2">
+          <label className="block">
+            <span className="mb-1 block text-sm font-medium text-slate-600">部位</span>
+            <select
+              value={bodyPart}
+              onChange={(e) => {
+                const part = e.target.value as BodyPart
+                setBodyPart(part)
+                onChange({ ...value, exerciseName: '' })
+              }}
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            >
+              {BODY_PARTS.map((part) => (
+                <option key={part} value={part}>
+                  {part}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="block">
+            <span className="mb-1 block text-sm font-medium text-slate-600">種目名</span>
+            <select
+              value={value.exerciseName}
+              onChange={(e) => onChange({ ...value, exerciseName: e.target.value })}
+              required
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            >
+              <option value="" disabled>
+                種目を選択
+              </option>
+              {exerciseOptions.map((name) => (
+                <option key={name} value={name}>
+                  {name}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
         {onRemove && (
           <button
             type="button"

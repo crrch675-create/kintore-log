@@ -18,12 +18,6 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 pb-16">
-      <datalist id="exercise-names">
-        {exerciseNames.map((name) => (
-          <option key={name} value={name} />
-        ))}
-      </datalist>
-
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-2xl px-4 py-4">
           <h1 className="text-xl font-bold text-slate-800">💪 筋トレ記録</h1>
