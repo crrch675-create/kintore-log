@@ -100,20 +100,20 @@ export function ProgressChart({ workouts, exerciseNames }: Props) {
               <YAxis yAxisId="left" tick={{ fontSize: 12 }} stroke="#f59e0b" />
               <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12 }} stroke="#4f46e5" />
               <Tooltip />
-              <Legend />
-              <Line
-                yAxisId="right"
-                type="monotone"
-                dataKey="最大重量"
-                stroke="#4f46e5"
-                strokeWidth={2}
-                dot
-              />
+              <Legend itemSorter={null} />
               <Line
                 yAxisId="left"
                 type="monotone"
                 dataKey="総重量"
                 stroke="#f59e0b"
+                strokeWidth={2}
+                dot
+              />
+              <Line
+                yAxisId="right"
+                type="monotone"
+                dataKey="最大重量"
+                stroke="#4f46e5"
                 strokeWidth={2}
                 dot
               />
