@@ -94,14 +94,29 @@ export function ProgressChart({ workouts, exerciseNames }: Props) {
       ) : (
         <div className="h-72 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 8, right: 16, left: -16, bottom: 0 }}>
+            <LineChart data={data} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
               <XAxis dataKey="date" tick={{ fontSize: 12 }} stroke="#94a3b8" />
-              <YAxis tick={{ fontSize: 12 }} stroke="#94a3b8" />
+              <YAxis yAxisId="left" tick={{ fontSize: 12 }} stroke="#f59e0b" />
+              <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12 }} stroke="#4f46e5" />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="最大重量" stroke="#4f46e5" strokeWidth={2} dot />
-              <Line type="monotone" dataKey="総重量" stroke="#f59e0b" strokeWidth={2} dot />
+              <Line
+                yAxisId="right"
+                type="monotone"
+                dataKey="最大重量"
+                stroke="#4f46e5"
+                strokeWidth={2}
+                dot
+              />
+              <Line
+                yAxisId="left"
+                type="monotone"
+                dataKey="総重量"
+                stroke="#f59e0b"
+                strokeWidth={2}
+                dot
+              />
             </LineChart>
           </ResponsiveContainer>
         </div>
