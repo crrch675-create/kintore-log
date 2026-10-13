@@ -11,6 +11,7 @@ type Props = {
 
 export function DayEntryList({ entries, onUpdate, onDelete }: Props) {
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [confirmId, setConfirmId] = useState<string | null>(null)
 
   return (
     <div className="space-y-3">
@@ -47,11 +48,17 @@ export function DayEntryList({ entries, onUpdate, onDelete }: Props) {
                 </button>
                 <button
                   onClick={() => {
-                    if (confirm('この記録を削除しますか？')) onDelete(entry.id)
+                    if (confirmId === entry.id) onDelete(entry.id)
+                    else setConfirmId(entry.id)
                   }}
-                  className="rounded-lg px-2 py-1 text-sm text-slate-500 hover:bg-slate-100 hover:text-red-500"
+                  onBlur={() => setConfirmId(null)}
+                  className={
+                    confirmId === entry.id
+                      ? 'rounded-lg bg-red-500 px-2 py-1 text-sm font-semibold text-white'
+                      : 'rounded-lg px-2 py-1 text-sm text-slate-500 hover:bg-slate-100 hover:text-red-500'
+                  }
                 >
-                  削除
+                  {confirmId === entry.id ? 'もう一度タップで削除' : '削除'}
                 </button>
               </div>
             </div>
