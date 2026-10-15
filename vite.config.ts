@@ -11,6 +11,10 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
+      workbox: {
+        // /golf/ is a separate static page, not part of the SPA
+        navigateFallbackDenylist: [/^\/golf\//],
+      },
       manifest: {
         name: '筋トレ記録',
         short_name: '筋トレ記録',
