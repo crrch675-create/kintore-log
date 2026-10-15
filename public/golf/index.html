@@ -427,6 +427,12 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   load();
   ui.view = db.current ? 'hole' : 'home';
   render();
+
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').catch(function () {});
+    });
+  }
 })();
 </script>
 </body>
